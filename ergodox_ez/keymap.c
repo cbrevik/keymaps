@@ -26,15 +26,19 @@ enum custom_keycodes {
 enum {
   TD_SEMICOLON_OE = 0,
   TD_F12_AA,
-  TD_APOS_AE
+  TD_APOS_AE,
+  TD_LPRN_LESS,
+  TD_RPRN_GRTR
 };
 
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for Esc, twice for Caps Lock
-  [TD_SEMICOLON_OE]  = ACTION_TAP_DANCE_DOUBLE(NO_SCLN, NO_OSLH),
-  [TD_F12_AA]  = ACTION_TAP_DANCE_DOUBLE(KC_F12, NO_AA),
-  [TD_APOS_AE]  = ACTION_TAP_DANCE_DOUBLE(NO_APOS, NO_AE),
+  [TD_SEMICOLON_OE] = ACTION_TAP_DANCE_DOUBLE(NO_SCLN, NO_OSLH),
+  [TD_F12_AA] = ACTION_TAP_DANCE_DOUBLE(KC_F12, NO_AA),
+  [TD_APOS_AE] = ACTION_TAP_DANCE_DOUBLE(NO_APOS, NO_AE),
+  [TD_LPRN_LESS] = ACTION_TAP_DANCE_DOUBLE(NO_LPRN, NO_LESS),
+  [TD_RPRN_GRTR] = ACTION_TAP_DANCE_DOUBLE(NO_RPRN, NO_GRTR),
 };
 
 #define BASE 0 // default layer
@@ -46,12 +50,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Layer 0: Base
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |    |   |   !  |   @  |   #  |   $  |   %  |  [   |           |   ]  |   ^  |   &  |   *  |   +  |   -  |   =    |
+ * |    |   |   !  |   @  |   #  |   $  |   %  |  [   |           |   ]  |   &  |   /  |   *  |   +  |   -  |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  (   |           |   )  |   Y  |   U  |   I  |   O  |   P  |  F12/å |
+ * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  (/< |           |  )/> |   Y  |   U  |   I  |   O  |   P  |  F12/å |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |   Esc  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;/ø |   '/æ  |
- * |--------+------+------+------+------+------|  {   |           |   }  |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------|  {   |           |  }   |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | LCtrl| Win  | LAlt | ~L1  | RCtrl|                                       | LEFT | DOWN |  UP  | RIGHT|  ~L2 |
@@ -66,9 +70,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [BASE] = LAYOUT_ergodox(
     // left
-    KC_PIPE, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, NO_LBRC, 
-    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_LPRN,
-    KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G, 
+    NO_PIPE, KC_EXLM, NO_AT, KC_HASH, NO_DLR, KC_PERC, NO_LBRC,
+    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, TD(TD_LPRN_LESS),
+    KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
     KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LCBR,
       KC_LCTRL, KC_LGUI, KC_LALT, MO(1), KC_RCTRL,
 
@@ -76,8 +80,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TG(1), TG(2), TG(3), KC_SPACE, KC_SPACE, KC_END,
     
     // right
-    NO_RBRC, KC_CIRC, KC_AMPR, KC_KP_ASTERISK, KC_PLUS, KC_MINUS, KC_EQUAL,
-    NO_RPRN, KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_F12_AA),
+    NO_RBRC, NO_AMPR, NO_SLSH, KC_KP_ASTERISK, NO_PLUS, KC_MINUS, NO_EQL,
+    TD(TD_RPRN_GRTR), KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_F12_AA),
     KC_H, KC_J, KC_K, KC_L, TD(TD_SEMICOLON_OE), TD(TD_APOS_AE),
     NO_RCBR, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
       KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(2),
