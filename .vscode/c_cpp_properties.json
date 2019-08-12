@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../qmk_firmware/quantum/**",
+                "${workspaceFolder}/../qmk_firmware/quantum/keymap_extras/**",
+                "${workspaceFolder}/../qmk_firmware/tmk_core/common/**",
+                "${workspaceFolder}/../qmk_firmware/keyboards/ergodox_ez/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

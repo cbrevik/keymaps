@@ -20,6 +20,7 @@ enum custom_keycodes {
   HSV_172_255_255,
   HSV_86_255_128,
   HSV_27_255_255,
+
 };
 
 //Tap Dance Declarations
@@ -42,12 +43,56 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 #define BASE 0 // default layer
-#define SYMBOLS 1 // numbers + function keys
-#define MOUSE 2 // mouse
-#define OVERWATCH 3 // specifically overwatch gaming
+#define DEV 1
+#define SYMBOLS 2 // numbers + function keys
+#define MOUSE 3 // mouse
+#define OVERWATCH 4 // specifically overwatch gaming
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Layer 0: Base
+/* Layer 0: BASE
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |    |   |   1  |   2  |   3  |   4  |   5  |  [   |           |   ]  |   6  |   7  |   8  |   9  |   0  |   +    |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  (/< |           |  )/> |   Y  |   U  |   I  |   O  |   P  |  F12/å |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |   Esc  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;/ø |   '/æ  |
+ * |--------+------+------+------+------+------|  {   |           |  }   |------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   | LCtrl| Win  | LAlt | RAlt | RCtrl|                                       | LEFT | DOWN |  UP  | RIGHT|  ~L2 |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,--------------.
+ *                                        |  L1  |  L2  |       |ShftF10|RighAlt|
+ *                                 ,------|------|------|       |------+-------+------.
+ *                                 |      |      |  L3  |       | PgUp |       |      |
+ *                                 | Space| Space|------|       |------| BckSpc|Enter |
+ *                                 |      |      | End  |       | PgDwn|       |      |
+ *                                 `--------------------'       `---------------------'
+ */
+  [BASE] = LAYOUT_ergodox(
+    // left
+    NO_PIPE, KC_EXLM, NO_AT, KC_HASH, NO_DLR, KC_PERC, NO_LBRC,
+    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, TD(TD_LPRN_LESS),
+    KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
+    KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LCBR,
+      KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, KC_RCTRL,
+
+    // mid left
+    TG(SYMBOLS), TG(MOUSE), TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_END,
+    
+    // right
+    NO_RBRC, NO_AMPR, NO_SLSH, KC_KP_ASTERISK, NO_PLUS, KC_MINUS, NO_EQL,
+    TD(TD_RPRN_GRTR), KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_F12_AA),
+    KC_H, KC_J, KC_K, KC_L, TD(TD_SEMICOLON_OE), TD(TD_APOS_AE),
+    NO_RCBR, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
+      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(MOUSE),
+    
+    // mid right
+    LSFT(KC_F10), KC_RALT, KC_PGUP, KC_PGDOWN, KC_BSPACE, KC_ENTER
+  ),
+
+/* Layer: DEV
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |    |   |   !  |   @  |   #  |   $  |   %  |  [   |           |   ]  |   &  |   /  |   *  |   +  |   -  |   =    |
@@ -68,23 +113,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      | End  |       | PgDwn|       |      |
  *                                 `--------------------'       `---------------------'
  */
-  [BASE] = LAYOUT_ergodox(
+  [DEV] = LAYOUT_ergodox(
     // left
     NO_PIPE, KC_EXLM, NO_AT, KC_HASH, NO_DLR, KC_PERC, NO_LBRC,
     KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, TD(TD_LPRN_LESS),
     KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
     KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LCBR,
-      KC_LCTRL, KC_LGUI, KC_LALT, MO(1), KC_RCTRL,
+      KC_LCTRL, KC_LGUI, KC_LALT, MO(SYMBOLS), KC_RCTRL,
 
     // mid left
-    TG(1), TG(2), TG(3), KC_SPACE, KC_SPACE, KC_END,
+    TG(SYMBOLS), TG(MOUSE), TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_END,
     
     // right
     NO_RBRC, NO_AMPR, NO_SLSH, KC_KP_ASTERISK, NO_PLUS, KC_MINUS, NO_EQL,
     TD(TD_RPRN_GRTR), KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_F12_AA),
     KC_H, KC_J, KC_K, KC_L, TD(TD_SEMICOLON_OE), TD(TD_APOS_AE),
     NO_RCBR, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
-      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(2),
+      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(MOUSE),
     
     // mid right
     LSFT(KC_F10), KC_RALT, KC_PGUP, KC_PGDOWN, KC_BSPACE, KC_ENTER
