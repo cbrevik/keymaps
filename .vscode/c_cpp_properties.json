@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../qmk_firmware/quantum/**",
+                "${workspaceFolder}/../qmk_firmware/quantum/process_keycode/**",
                 "${workspaceFolder}/../qmk_firmware/quantum/keymap_extras/**",
                 "${workspaceFolder}/../qmk_firmware/tmk_core/common/**",
                 "${workspaceFolder}/../qmk_firmware/keyboards/ergodox_ez/**"
