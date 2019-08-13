@@ -255,7 +255,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LCTRL, KC_LCTRL, KC_NO, KC_C, KC_V,
 
     // mid left
-    KC_NO, KC_NO, TG(3), KC_SPACE, KC_SPACE, KC_NO,
+    KC_NO, KC_NO, TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_NO,
     
     // right
     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
