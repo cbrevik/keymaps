@@ -20,77 +20,125 @@ enum custom_keycodes {
   HSV_172_255_255,
   HSV_86_255_128,
   HSV_27_255_255,
+
 };
 
 //Tap Dance Declarations
 enum {
-  TD_SEMICOLON_OE = 0,
-  TD_F12_AA,
-  TD_APOS_AE,
-  TD_LPRN_LESS,
-  TD_RPRN_GRTR
+  TD_LPRN_LESS = 0,
+  TD_RPRN_GRTR,
+  TD_LEFT_HOME,
+  TD_RIGHT_END,
+  TD_UP_PGUP,
+  TD_DOWN_PGDOWN
 };
 
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for Esc, twice for Caps Lock
-  [TD_SEMICOLON_OE] = ACTION_TAP_DANCE_DOUBLE(NO_SCLN, NO_OSLH),
-  [TD_F12_AA] = ACTION_TAP_DANCE_DOUBLE(KC_F12, NO_AA),
-  [TD_APOS_AE] = ACTION_TAP_DANCE_DOUBLE(NO_APOS, NO_AE),
   [TD_LPRN_LESS] = ACTION_TAP_DANCE_DOUBLE(NO_LPRN, NO_LESS),
   [TD_RPRN_GRTR] = ACTION_TAP_DANCE_DOUBLE(NO_RPRN, NO_GRTR),
+  [TD_LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
+  [TD_RIGHT_END] = ACTION_TAP_DANCE_DOUBLE(KC_RIGHT, KC_END),
+  [TD_UP_PGUP] = ACTION_TAP_DANCE_DOUBLE(KC_UP, KC_PGUP),
+  [TD_DOWN_PGDOWN] = ACTION_TAP_DANCE_DOUBLE(KC_DOWN, KC_PGDOWN),
 };
 
 #define BASE 0 // default layer
-#define SYMBOLS 1 // numbers + function keys
-#define MOUSE 2 // mouse
-#define OVERWATCH 3 // specifically overwatch gaming
+#define DEV 1
+#define SYMBOLS 2 // numbers + function keys
+#define MOUSE 3 // mouse
+#define OVERWATCH 4 // specifically overwatch gaming
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Layer 0: Base
+/* Layer: BASE
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |    |   |   !  |   @  |   #  |   $  |   %  |  [   |           |   ]  |   &  |   /  |   *  |   +  |   -  |   =    |
+ * |    '   |   1  |   2  |   3  |   4  |   5  |  `   |           |   ´  |   6  |   7  |   8  |   9  |   0  |   +    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  (/< |           |  )/> |   Y  |   U  |   I  |   O  |   P  |  F12/å |
+ * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  <   |           |   >  |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |   Esc  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;/ø |   '/æ  |
- * |--------+------+------+------+------+------|  {   |           |  }   |------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
+ * |   Esc  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   Ø  |   Æ    |
+ * |--------+------+------+------+------+------|  ¨   |          `|   @  |------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   -  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | LCtrl| Win  | LAlt | ~L1  | RCtrl|                                       | LEFT | DOWN |  UP  | RIGHT|  ~L2 |
- *   `----------------------------------'                                       `----------------------------------'
+ *   | LCtrl| Win  | LAlt | RAlt | RCtrl|                                       | LEFT| DOWN |  UP  | RIGHT|  ~L3  |
+ *   `----------------------------------'                                       | HOME|PGDOWN| PGUP |  END |       |
+ *                                                                              `----------------------------------'
  *                                        ,-------------.       ,--------------.
  *                                        |  L1  |  L2  |       |ShftF10|RighAlt|
  *                                 ,------|------|------|       |------+-------+------.
  *                                 |      |      |  L3  |       | PgUp |       |      |
  *                                 | Space| Space|------|       |------| BckSpc|Enter |
- *                                 |      |      | End  |       | PgDwn|       |      |
+ *                                 |      |      | End  |       |  Del |       |      |
  *                                 `--------------------'       `---------------------'
  */
   [BASE] = LAYOUT_ergodox(
     // left
-    NO_PIPE, KC_EXLM, NO_AT, KC_HASH, NO_DLR, KC_PERC, NO_LBRC,
-    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, TD(TD_LPRN_LESS),
+    NO_APOS, KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRAVE,
+    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_GRTR,
     KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
-    KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LCBR,
-      KC_LCTRL, KC_LGUI, KC_LALT, MO(1), KC_RCTRL,
+    KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_QUOT,
+      KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, KC_RCTRL,
 
     // mid left
-    TG(1), TG(2), TG(3), KC_SPACE, KC_SPACE, KC_END,
+    TG(DEV), TG(SYMBOLS), TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_END,
     
     // right
-    NO_RBRC, NO_AMPR, NO_SLSH, KC_KP_ASTERISK, NO_PLUS, KC_MINUS, NO_EQL,
-    TD(TD_RPRN_GRTR), KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_F12_AA),
-    KC_H, KC_J, KC_K, KC_L, TD(TD_SEMICOLON_OE), TD(TD_APOS_AE),
-    NO_RCBR, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
-      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(2),
+    NO_ACUT, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
+    NO_LESS, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
+    KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
+    NO_AT, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
+      TD(TD_LEFT_HOME), TD(TD_DOWN_PGDOWN), TD(TD_UP_PGUP), TD(TD_RIGHT_END), MO(MOUSE),
     
     // mid right
-    LSFT(KC_F10), KC_RALT, KC_PGUP, KC_PGDOWN, KC_BSPACE, KC_ENTER
+    LSFT(KC_F10), KC_RALT, KC_PGUP, KC_DEL, KC_BSPACE, KC_ENTER
   ),
 
-/* Layer 1: Symbols
+/* Layer: DEV
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |      |      |      |  [   |           |   ]  |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |  (/< |           |  )/> |      |      |      |      |      |   F12  |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      |      |      |      |   ;  |    '   |
+ * |--------+------+------+------+------+------|  {   |           |  }   |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      | ~SYM |      |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,--------------.
+ *                                        |      |      |       |      |       |
+ *                                 ,------|------|------|       |------+-------+------.
+ *                                 |      |      |      |       |      |       |      |
+ *                                 |      |      |------|       |------|       |      |
+ *                                 |      |      |      |       |      |       |      |
+ *                                 `--------------------'       `---------------------'
+ */
+  [DEV] = LAYOUT_ergodox(
+    // left
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LBRC,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TD(TD_LPRN_LESS),
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LCBR,
+      KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MO(SYMBOLS), KC_TRANSPARENT,
+
+    // mid left
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    
+    // right
+    NO_RBRC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    TD(TD_RPRN_GRTR), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_SCLN, NO_APOS,
+    NO_RCBR, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+      KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    
+    // mid right
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+
+/* Layer: Symbols
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
@@ -134,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ), 
 
-/* Layer 2: Mouse
+/* Layer: Mouse
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
@@ -177,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ), 
 
-/* Layer 3: Overwatch - nothing transparent, every key has a purpose or does not work at all
+/* Layer: Overwatch - nothing transparent, every key has a purpose or does not work at all
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |   Hero |   1  |   2  |      |      |  Esc |   P  |           |      |      |      |      |      |      |        |
@@ -207,7 +255,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LCTRL, KC_LCTRL, KC_NO, KC_C, KC_V,
 
     // mid left
-    KC_NO, KC_NO, TG(3), KC_SPACE, KC_SPACE, KC_NO,
+    KC_NO, KC_NO, TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_NO,
     
     // right
     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
@@ -233,11 +281,14 @@ void keyboard_post_init_user(void) {
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     [0] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
 
-    [1] = { {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255} },
+    [1] = { {50,153,244}, {20,177,225}, {50,153,244}, {20,177,225}, {50,153,244}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {50,153,244}, {20,177,225}, {20,177,225}, {50,153,244}, {50,153,244}, {20,177,225}, {50,153,244}, {20,177,225}, {50,153,244}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255}, {154,86,255} },
 
-    [2] = { {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {15,166,195}, {15,166,195}, {15,166,195}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {0,183,238}, {103,255,255}, {103,255,255}, {0,183,238}, {0,183,238}, {0,183,238}, {0,183,238}, {103,255,255}, {0,183,238}, {0,183,238}, {103,255,255}, {0,183,238}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255} },
+    [2] = { {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {218,255,255}, {31,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255}, {218,255,255} },
 
-    [3] = { {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {85,203,158}, {10,225,255}, {10,225,255}, {10,225,255}, {85,203,158}, {85,203,158}, {85,203,158}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255} },
+    [3] = { {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {15,166,195}, {15,166,195}, {15,166,195}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {0,183,238}, {103,255,255}, {103,255,255}, {0,183,238}, {0,183,238}, {0,183,238}, {0,183,238}, {103,255,255}, {0,183,238}, {0,183,238}, {103,255,255}, {0,183,238}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255}, {103,255,255} },
+
+    [4] = { {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {85,203,158}, {10,225,255}, {10,225,255}, {10,225,255}, {85,203,158}, {85,203,158}, {85,203,158}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255} },
+
 };
 
 void set_layer_color(int layer) {
@@ -269,6 +320,16 @@ void rgb_matrix_indicators_user(void) {
     case 2:
       set_layer_color(2);
       break;
+    case 3:
+      set_layer_color(3);
+      break;
+    case 4:
+      set_layer_color(4);
+      break;
+   default:
+    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
+      rgb_matrix_set_color_all(0, 0, 0);
+    break;
   }
 }
 
