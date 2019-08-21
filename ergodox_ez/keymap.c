@@ -27,10 +27,6 @@ enum custom_keycodes {
 enum {
   TD_LPRN_LESS = 0,
   TD_RPRN_GRTR,
-  TD_LEFT_HOME,
-  TD_RIGHT_END,
-  TD_UP_PGUP,
-  TD_DOWN_PGDOWN
 };
 
 //Tap Dance Definitions
@@ -38,15 +34,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for Esc, twice for Caps Lock
   [TD_LPRN_LESS] = ACTION_TAP_DANCE_DOUBLE(NO_LPRN, NO_LESS),
   [TD_RPRN_GRTR] = ACTION_TAP_DANCE_DOUBLE(NO_RPRN, NO_GRTR),
-  [TD_LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
-  [TD_RIGHT_END] = ACTION_TAP_DANCE_DOUBLE(KC_RIGHT, KC_END),
-  [TD_UP_PGUP] = ACTION_TAP_DANCE_DOUBLE(KC_UP, KC_PGUP),
-  [TD_DOWN_PGDOWN] = ACTION_TAP_DANCE_DOUBLE(KC_DOWN, KC_PGDOWN),
 };
 
 #define BASE 0 // default layer
 #define DEV 1
-#define SYMBOLS 2 // numbers + function keys
+#define DEVMETA 2 // function keys + dev symbols
 #define MOUSE 3 // mouse
 #define OVERWATCH 4 // specifically overwatch gaming
 
@@ -54,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Layer: BASE
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |    '   |   1  |   2  |   3  |   4  |   5  |  `   |           |   ´  |   6  |   7  |   8  |   9  |   0  |   +    |
+ * |    '   |   1  |   2  |   3  |   4  |   5  |  |   |           |   ´  |   6  |   7  |   8  |   9  |   0  |   +    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  <   |           |   >  |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -63,8 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   -  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | LCtrl| Win  | LAlt | RAlt | RCtrl|                                       | LEFT| DOWN |  UP  | RIGHT|  ~L3  |
- *   `----------------------------------'                                       | HOME|PGDOWN| PGUP |  END |       |
- *                                                                              `----------------------------------'
+ *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,--------------.
  *                                        |  L1  |  L2  |       |ShftF10|RighAlt|
  *                                 ,------|------|------|       |------+-------+------.
@@ -76,20 +67,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_ergodox(
     // left
     NO_APOS, KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRAVE,
-    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_GRTR,
+    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_LESS,
     KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
     KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_QUOT,
       KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, KC_RCTRL,
 
     // mid left
-    TG(DEV), TG(SYMBOLS), TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_END,
+    TG(DEV), TG(MOUSE), TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_END,
     
     // right
     NO_ACUT, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
-    NO_LESS, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
+    NO_GRTR, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
     KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
     NO_AT, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
-      TD(TD_LEFT_HOME), TD(TD_DOWN_PGDOWN), TD(TD_UP_PGUP), TD(TD_RIGHT_END), MO(MOUSE),
+      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(MOUSE),
     
     // mid right
     LSFT(KC_F10), KC_RALT, KC_PGUP, KC_DEL, KC_BSPACE, KC_ENTER
@@ -106,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|  {   |           |  }   |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | ~SYM |      |                                       |      |      |      |      |      |
+ *   |      |      |      | ~META|      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,--------------.
  *                                        |      |      |       |      |       |
@@ -122,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TD(TD_LPRN_LESS),
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LCBR,
-      KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MO(SYMBOLS), KC_TRANSPARENT,
+      KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MO(DEVMETA), KC_TRANSPARENT,
 
     // mid left
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -138,18 +129,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
 
-/* Layer: Symbols
+/* Layer: Dev meta
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |  ~   |  7   |  8   |  9   |  *   |   F12  |
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |   F12  |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------|  `   |  4   |  5   |  6   |  +   |        |
+ * |        |      |      |      |      |      |------|           |------|      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |  1   |  2   |  3   |  \   |        |
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |  0   |  .   | Enter|  =   |      |
+ *   |      |      |      |      |      |                                       | HOME |PGDOWN| PGUP |  END |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
@@ -160,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 
-  [SYMBOLS] = LAYOUT_ergodox(
+  [DEVMETA] = LAYOUT_ergodox(
     // left
     KC_TRANSPARENT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
@@ -173,10 +164,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     // right
     KC_TRANSPARENT, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, 
-    KC_TRANSPARENT, KC_TILD, KC_7, KC_8, KC_9, KC_ASTR, KC_F12, 
-    KC_GRAVE, KC_4, KC_5, KC_6, KC_PLUS, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_1, KC_2, KC_3, KC_BSLASH, 
-      KC_TRANSPARENT, KC_0, KC_DOT, KC_KP_ENTER, KC_EQUAL, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+      KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, KC_TRANSPARENT, 
       
     // right mid
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
