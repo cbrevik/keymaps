@@ -58,9 +58,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #define BASE 0 // default layer
 #define DEV 1
-#define DEVMETA 2   // function keys + dev symbols
-#define MOUSE 3     // mouse
-#define OVERWATCH 4 // specifically overwatch gaming
+#define META 2      // function keys + dev symbols
+#define OVERWATCH 3 // specifically overwatch gaming
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer: BASE
@@ -74,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|  (   |          `|   )  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   -  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | LCtrl| Win  | LAlt | RAlt | RCtrl|                                       | LEFT| DOWN |  UP  | RIGHT|  ~L3  |
+ *   | LCtrl| Cmd  | LAlt | RAlt |~META |                                       | LEFT | DOWN |  UP  | RIGHT| ~META  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,--------------.
  *                                        |   <  |  L1  |       | RAlt |>,=>,/>|
@@ -90,17 +89,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_QUOT,
         KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
         KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LPRN,
-        KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, KC_RCTRL,
+        KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, MO(META),
 
         // mid left
-        NO_LESS, TG(DEV), TG(MOUSE), KC_SPACE, KC_SPACE, TG(OVERWATCH),
+        NO_LESS, TG(DEV), TG(OVERWATCH), KC_SPACE, KC_SPACE, TG(OVERWATCH),
 
         // right
-        NO_GRV_MAC, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
+        NO_ACUT_MAC, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
         NO_AT_MAC, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
         KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
         NO_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
-        KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(MOUSE),
+        KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(META),
 
         // mid right
         KC_RALT, TD(TD_GRTR_GRTRCLOSE), KC_DEL, KC_BSPACE, KC_ENTER, KC_ENTER),
@@ -116,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | ~META|      |                                       |      |      |      |      |      |
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,--------------.
  *                                        |      |      |       |      |       |
@@ -132,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LCBR_MAC,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MO(DEVMETA), KC_TRANSPARENT,
+        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
 
         // mid left
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -169,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 
-    [DEVMETA] = LAYOUT_ergodox(
+    [META] = LAYOUT_ergodox(
         // left
         KC_TRANSPARENT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRANSPARENT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -186,48 +185,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, KC_TRANSPARENT,
-
-        // right mid
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT),
-
-    /* Layer: Mouse
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      | M UP |      |      |      |           |      |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      | MLEFT| MDWN |MRIGHT|WHEELU|------|           |------|      |      |      |      |      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |M BTN1|      |M BTN2|WHEELD|      |           |      |      |      |      |      |      |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |      |      |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-    [MOUSE] = LAYOUT_ergodox(
-        // left
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_UP, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_MS_WH_UP,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_BTN1, KC_TRANSPARENT, KC_MS_BTN2, KC_MS_WH_DOWN, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-
-        // left mid
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-
-        // right
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
 
         // right mid
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT),
@@ -291,9 +248,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
 
     [2] = {{218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {31, 255, 255}, {31, 255, 255}, {31, 255, 255}, {218, 255, 255}, {218, 255, 255}, {31, 255, 255}, {31, 255, 255}, {31, 255, 255}, {218, 255, 255}, {218, 255, 255}, {31, 255, 255}, {31, 255, 255}, {31, 255, 255}, {218, 255, 255}, {31, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}, {218, 255, 255}},
 
-    [3] = {{103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {15, 166, 195}, {15, 166, 195}, {15, 166, 195}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {0, 183, 238}, {103, 255, 255}, {103, 255, 255}, {0, 183, 238}, {0, 183, 238}, {0, 183, 238}, {0, 183, 238}, {103, 255, 255}, {0, 183, 238}, {0, 183, 238}, {103, 255, 255}, {0, 183, 238}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}, {103, 255, 255}},
-
-    [4] = {{10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {85, 203, 158}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {85, 203, 158}, {85, 203, 158}, {85, 203, 158}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}},
+    [3] = {{10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {85, 203, 158}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {85, 203, 158}, {85, 203, 158}, {85, 203, 158}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}, {10, 225, 255}},
 
 };
 
@@ -338,9 +293,6 @@ void rgb_matrix_indicators_user(void)
     break;
   case 3:
     set_layer_color(3);
-    break;
-  case 4:
-    set_layer_color(4);
     break;
   default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE)
