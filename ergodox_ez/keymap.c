@@ -56,18 +56,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_GRTR_GRTRCLOSE] = ACTION_TAP_DANCE_FN(grtr_tapdance),
 };
 
-#define BASE 0 // default layer
-#define DEV 1
-#define META 2      // function keys + dev symbols
-#define OVERWATCH 3 // specifically overwatch gaming
+#define BASE 0      // default layer
+#define META 1      // function keys + dev symbols
+#define OVERWATCH 2 // specifically overwatch gaming
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer: BASE
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |    '   |   1  |   2  |   3  |   4  |   5  |  |   |           |   ´  |   6  |   7  |   8  |   9  |   0  |   +    |
+ * |    '   |   1  |   2  |   3  |   4  |   5  |  [   |           |   ]  |   6  |   7  |   8  |   9  |   0  |   +    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  ¨   |           |   @  |   Y  |   U  |   I  |   O  |   P  |   Å    |
+ * |   TAB  |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |   Esc  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   Ø  |   Æ    |
  * |--------+------+------+------+------+------|  (   |          `|   )  |------+------+------+------+------+--------|
@@ -76,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   | LCtrl| Cmd  | LAlt | RAlt |~META |                                       | LEFT | DOWN |  UP  | RIGHT| ~META  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,--------------.
- *                                        |   <  |  L1  |       | RAlt |>,=>,/>|
+ *                                        |   <  |  L1  |       | RAlt | >,=>,/>|
  *                                 ,------|------|------|       |------+-------+------.
  *                                 |      |      |  L2  |       |  Del |       |      |
  *                                 | Space| Space|------|       |------| Enter |Enter |
@@ -85,18 +84,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [BASE] = LAYOUT_ergodox(
         // left
-        KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, NO_PIPE_MAC,
-        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_QUOT,
+        KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, NO_LBRC,
+        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_LCBR_MAC,
         KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G,
         KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, NO_LPRN,
         KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, MO(META),
 
         // mid left
-        NO_LESS, TG(DEV), TG(OVERWATCH), KC_SPACE, KC_SPACE, TG(OVERWATCH),
+        NO_LESS, TG(META), TG(OVERWATCH), KC_SPACE, KC_SPACE, TG(OVERWATCH),
 
         // right
-        NO_ACUT_MAC, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
-        NO_AT_MAC, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
+        NO_RBRC, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
+        NO_RCBR_MAC, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
         KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
         NO_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
         KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(META),
@@ -104,56 +103,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // mid right
         KC_RALT, TD(TD_GRTR_GRTRCLOSE), KC_DEL, KC_BSPACE, KC_ENTER, KC_ENTER),
 
-    /* Layer: DEV
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |  [   |           |   ]  |      |      |      |      |      |        |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |  {   |           |   {  |      |      |      |      |      |   F12  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------|      |      |      |      |   ;  |    =   |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |      |      |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,--------------.
- *                                        |      |      |       |      |       |
- *                                 ,------|------|------|       |------+-------+------.
- *                                 |      |      |      |       |      |       |      |
- *                                 |      |      |------|       |------|       |      |
- *                                 |      |      |      |       |      |       |      |
- *                                 `--------------------'       `---------------------'
- */
-    [DEV] = LAYOUT_ergodox(
-        // left
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LBRC,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_LCBR_MAC,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-
-        // mid left
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-
-        // right
-        NO_RBRC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        NO_RCBR_MAC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_SCLN, NO_EQL,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-
-        // mid right
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT),
-
     /* Layer: Dev meta
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |   ´  |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |   F12  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|  ¨   |           |   @  |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      |      |      |      |   ;  |    =   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -171,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [META] = LAYOUT_ergodox(
         // left
         KC_TRANSPARENT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_QUOT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -180,9 +137,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
 
         // right
-        KC_TRANSPARENT, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+        NO_ACUT_MAC, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
+        NO_AT_MAC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
+        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_SCLN, NO_EQL,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
         KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, KC_TRANSPARENT,
 
