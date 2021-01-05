@@ -51,7 +51,6 @@ void grtr_tapdance(qk_tap_dance_state_t *state, void *user_data)
 
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    //Tap once for Esc, twice for Caps Lock
     [TD_GRTR_GRTRCLOSE] = ACTION_TAP_DANCE_FN(grtr_tapdance),
 };
 
@@ -69,12 +68,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   Esc  |   A  |   S  |   D  |   F  |   G  |  (   |           |   )  |   H  |   J  |   K  |   L  |   Ø  |   Æ    |
  * |--------+------+------+------+------+------|------'           `------|------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |                         |   N  |   M  |   ,  |   .  |   -  | RShift |
- * `--------+------+------+------+------+-------                         `------+------+------+------+------+--------'
+ * `--------+------+------+------+------+------'                         `------+------+------+------+------+--------'
  *   | LCtrl| Cmd  | LAlt | RAlt |~META |  ,-------------.     ,--------------. | LEFT | DOWN |  UP  | RIGHT| ~META  |
- *   `----------------------------------'  |   Delete    |     |  Backspace   | `----------------------------------'                                                                                       
+ *   `----------------------------------'  |      <      |     |  >/=>//>     | `----------------------------------'                                                                                       
  *                                  ,------|------|------|     |------+-------+------.
  *                                  |      |      |      |     |      |       |      |
- *                                  | Space| Space|   <  |     | =>,/>| Enter |Enter |
+ *                                  | Space| Space|Delete|     |BckSpc| Enter |Enter |
  *                                  |      |      |      |     |      |       |      |
  *                                  `--------------------'     `---------------------'
  */
@@ -83,36 +82,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_LCBR_MAC, NO_RCBR_MAC, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
         KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G, NO_LPRN, NO_RPRN, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
         KC_LSHIFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSHIFT,
-        KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, MO(META), KC_DEL, KC_BSPACE, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(META),
-        KC_SPACE, KC_SPACE, NO_LESS, TD(TD_GRTR_GRTRCLOSE), KC_ENTER, KC_ENTER),
+        KC_LCTRL, KC_LGUI, KC_LALT, KC_RALT, MO(META), NO_LESS, TD(TD_GRTR_GRTRCLOSE), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, MO(META),
+        KC_SPACE, KC_SPACE, KC_DEL, KC_BSPACE, KC_ENTER, KC_ENTER),
     /* Layer: Dev meta
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |   ´  |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |   F12  |
- * |--------+------+------+------+------+------|  ¨   |           |   @  |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------|      | UP 10|DOWN10|      |   ;  |    =   |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       | HOME |PGDOWN| PGUP |  END |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
+ * |        |      |      |      |      |      |  ¨   |           |   @  |      |      |      |      |      |   F12  |
+ * |--------+------+------+------+------+------|------|           |------|------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      | UP 10|DOWN10|      |   ;  |    =   |
+ * |--------+------+------+------+------+------|------'           `------|------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |                         |      |      |      |      |      |        |
+ * `--------+------+------+------+------+------'                         `------+------+------+------+------+--------'
+ *   |      |      |      |      |      |  ,-------------.     ,--------------. | HOME |PGDOWN| PGUP |  END |        |
+ *   `----------------------------------'  |             |     |              | `----------------------------------'                                                                                       
+ *                                  ,------|------|------|     |------+-------+------.
+ *                                  |      |      |      |     |      |       |      |
+ *                                  |      |      |      |     |      |       |      |
+ *                                  |      |      |      |     |      |       |      |
+ *                                  `--------------------'     `---------------------'
  */
 
     [META] = LAYOUT_moonlander(
         KC_TRANSPARENT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRANSPARENT, NO_ACUT_MAC, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_QUOT, NO_AT_MAC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, VIM_DOWN_10, VIM_UP_10, KC_TRANSPARENT, NO_SCLN, NO_EQL,
         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, KC_TRANSPARENT,
         RGB_VAD, RGB_VAI, KC_TRANSPARENT, RGB_SLD, RGB_HUD, RGB_HUI),
 };
 
