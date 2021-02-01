@@ -20,7 +20,9 @@ enum custom_keycodes
   HSV_86_255_128,
   HSV_172_255_255,
   VIM_DOWN_10,
-  VIM_UP_10
+  VIM_UP_10,
+  VIM_LEFT_10,
+  VIM_RIGHT_10
 };
 
 //Tap Dance Declarations
@@ -54,11 +56,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_GRTR_GRTRCLOSE] = ACTION_TAP_DANCE_FN(grtr_tapdance),
 };
 
-#define BASE 0 // default layer
-#define META 1 // function keys + dev symbols
+#define BASE_MAC 0 // default layer
+#define META 1     // function keys + dev symbols
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* Layer: BASE
+    /* Layer: BASE MAC
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |    '   |   1  |   2  |   3  |   4  |   5  |  [   |           |   ]  |   6  |   7  |   8  |   9  |   0  |   +    |
@@ -77,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                  |      |      |      |     |      |       |      |
  *                                  `--------------------'     `---------------------'
  */
-    [BASE] = LAYOUT_moonlander(
+    [BASE_MAC] = LAYOUT_moonlander(
         KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, NO_LBRC, NO_RBRC, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, NO_LCBR_MAC, NO_RCBR_MAC, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA,
         KC_ESCAPE, KC_A, KC_S, KC_D, KC_F, KC_G, NO_LPRN, NO_RPRN, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE,
@@ -91,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      |      |      |      |      |  ¨   |           |   @  |      |      |      |      |      |   F12  |
  * |--------+------+------+------+------+------|------|           |------|------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      | UP 10|DOWN10|      |   ;  |    =   |
+ * |        |      |      |      |      |      |  ^   |           |   ~  |LEFT10| UP 10|DOWN10|RGHT10|   ;  |    =   |
  * |--------+------+------+------+------+------|------'           `------|------+------+------+------+------+--------|
  * |        |      |      |      |      |      |                         |      |      |      |      |      |        |
  * `--------+------+------+------+------+------'                         `------+------+------+------+------+--------'
@@ -105,12 +107,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [META] = LAYOUT_moonlander(
-        KC_TRANSPARENT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRANSPARENT, NO_ACUT_MAC, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, NO_QUOT, NO_AT_MAC, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, VIM_DOWN_10, VIM_UP_10, KC_TRANSPARENT, NO_SCLN, NO_EQL,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, KC_TRANSPARENT,
-        RGB_VAD, RGB_VAI, KC_TRANSPARENT, RGB_SLD, RGB_HUD, RGB_HUI),
+        _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, _______, NO_ACUT_MAC, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
+        _______, _______, _______, _______, _______, _______, NO_DIAE, NO_AT_MAC, _______, _______, _______, _______, _______, KC_F12,
+        _______, _______, _______, _______, _______, _______, NO_CIRC, NO_TILD, VIM_LEFT_10, VIM_DOWN_10, VIM_UP_10, VIM_RIGHT_10, NO_SCLN, NO_EQL,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, _______,
+        RGB_VAD, RGB_VAI, _______, RGB_SLD, RGB_HUD, RGB_HUI),
 };
 
 extern bool g_suspend_state;
@@ -193,6 +195,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       tap_code(KC_1);
       tap_code(KC_0);
       tap_code(KC_K);
+    }
+    return false;
+  case VIM_LEFT_10:
+    if (record->event.pressed)
+    {
+      tap_code(KC_1);
+      tap_code(KC_0);
+      tap_code(KC_H);
+    }
+    return false;
+  case VIM_RIGHT_10:
+    if (record->event.pressed)
+    {
+      tap_code(KC_1);
+      tap_code(KC_0);
+      tap_code(KC_L);
     }
     return false;
   case RGB_SLD:
