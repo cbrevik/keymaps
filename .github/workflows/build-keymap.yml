@@ -1,5 +1,3 @@
-# workflow which builds the keymap and adds it as artifact to the build action
-# using the Phoscur/QMK-compile action available on the marketplace
 name: Build Keymap
 
 on:
