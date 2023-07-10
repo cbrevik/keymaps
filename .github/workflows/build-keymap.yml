@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Keymap
-        uses: Phoscur/QMK-compile@c24496e
+        uses: Phoscur/QMK-compile@c24496eb5034abb859b87d3cfbe6871dd99011f4
         with:
           keyboard: moonlander
           keymap: moonlander
