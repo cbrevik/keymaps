@@ -1,0 +1,23 @@
+# workflow which builds the keymap and adds it as artifact to the build action
+# using the Phoscur/QMK-compile action available on the marketplace
+name: Build Keymap
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Keymap
+        uses: Phoscur/QMK-compile@c24496e
+        with:
+          keyboard: moonlander
+          keymap: moonlander
+          path: moonlander
