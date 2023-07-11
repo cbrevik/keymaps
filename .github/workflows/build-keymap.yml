@@ -19,3 +19,11 @@ jobs:
           keyboard: moonlander
           keymap: cbrevik
           path: ./moonlander
+          artifacts_path: ./artifacts
+      - name: Archive firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: |
+            *.hex
+            *.bin
