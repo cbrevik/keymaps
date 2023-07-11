@@ -24,6 +24,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: ./artifacts
-            *.hex
-            *.bin
+          path: |
+            ./artifacts/*.hex
+            ./artifacts/*.bin
