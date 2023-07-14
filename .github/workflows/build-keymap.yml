@@ -1,0 +1,29 @@
+name: Build Keymap
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Keymap
+        uses: Phoscur/QMK-compile@c24496eb5034abb859b87d3cfbe6871dd99011f4
+        with:
+          keyboard: moonlander
+          keymap: cbrevik
+          path: ./moonlander
+          artifacts_path: ./artifacts
+      - name: Archive firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: |
+            ./artifacts/*.hex
+            ./artifacts/*.bin
