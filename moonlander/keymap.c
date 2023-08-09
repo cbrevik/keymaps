@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
-#include "keymap_nordic.h"
 #include "keymap_norwegian.h"
 #include "keymap_contributions.h"
 
