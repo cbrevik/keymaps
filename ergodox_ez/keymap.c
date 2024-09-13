@@ -168,11 +168,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [OVERWATCH] = LAYOUT_ergodox(
         // left
-        KC_H, KC_1, KC_2, KC_NO, KC_NO, KC_ESCAPE, KC_P,
+        KC_H, KC_1, KC_2, KC_3, KC_4, KC_ESCAPE, KC_P,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_NO,
         KC_NO, KC_A, KC_S, KC_D, KC_F, KC_NO,
         KC_LSHIFT, KC_Z, KC_NO, KC_C, KC_V, KC_NO, KC_NO,
-        KC_LCTRL, KC_LCTRL, KC_NO, KC_C, KC_V,
+        KC_LCTRL, KC_LCTRL,KC_LALT, KC_RALT, KC_V,
 
         // mid left
         KC_NO, KC_NO, TG(OVERWATCH), KC_SPACE, KC_SPACE, KC_NO,
